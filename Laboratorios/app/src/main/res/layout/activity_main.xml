@@ -74,6 +74,6 @@
         android:layout_marginTop="60dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="155dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:src="@drawable/Imagen.png" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
