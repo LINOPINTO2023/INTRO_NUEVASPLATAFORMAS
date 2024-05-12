@@ -41,11 +41,20 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(edtUsername.getText().toString().equals("admin") && edtPassword.getText().toString().equals("admin")){
-                    Toast.makeText(getApplicationContext(), "Bienvenido a mi App",Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Bienvenido a mi App");
-                }else{
-                    Toast.makeText(getApplicationContext(), "Error en la Autenticacion",Toast.LENGTH_SHORT).show();
+                // Dentro del OnClickListener del botón de login
+                if(edtUsername.getText().toString().equals("admin") && edtPassword.getText().toString().equals("admin")) {
+                    // Si la autenticación es exitosa, crear un Intent para ir a HomeActivity
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+
+                    // Agregar el valor del campo de usuario como extra en el Intent
+                    intent.putExtra("username", edtUsername.getText().toString());
+
+                    // Iniciar HomeActivity
+                    startActivity(intent);
+                    finish(); // Terminar LoginActivity para que el usuario no pueda volver atrás
+                } else {
+                    // Si la autenticación falla, mostrar mensaje de error
+                    Toast.makeText(getApplicationContext(), "Error en la Autenticacion", Toast.LENGTH_SHORT).show();
                     Log.d(TAG,"Error en la Autenticacion");
                 }
             }

@@ -1,19 +1,21 @@
 package com.idnp2024a.loginsample;
 
-public class AccountEntity {
-    private String firtsname;
+import java.io.Serializable;
+
+public class AccountEntity implements Serializable {
+    private String firstname;
     private String lastname;
     private String email;
     private String phone;
     private String username;
     private String password;
 
-    public String getFirtsname() {
-        return firtsname;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirtsname(String firtsname) {
-        this.firtsname = firtsname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastname() {
