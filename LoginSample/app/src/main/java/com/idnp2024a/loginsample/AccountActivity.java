@@ -34,7 +34,7 @@ public class AccountActivity extends AppCompatActivity {
         EditText edtFirstname = findViewById(R.id.edtFirstname);
         EditText editLastname = findViewById(R.id.editLastname);
         EditText edtEmail = findViewById(R.id.edtEmail);
-        EditText editTextPhone = findViewById(R.id.editTextPhone);
+        EditText edtPhone = findViewById(R.id.edtPhone);
         EditText edtUsername2 = findViewById(R.id.edtUsername2);
         EditText edtPassword2 = findViewById(R.id.edtPassword2);
 
@@ -42,16 +42,16 @@ public class AccountActivity extends AppCompatActivity {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountEntity account = new AccountEntity();
-                account.setFirstname(edtFirstname.getText().toString());
-                account.setLastname(editLastname.getText().toString());
-                account.setEmail(edtEmail.getText().toString());
-                account.setPhone(editTextPhone.getText().toString());
-                account.setUsername(edtUsername2.getText().toString());
-                account.setPassword(edtPassword2.getText().toString());
+                AccountEntity accountEntity = new AccountEntity();
+                accountEntity.setFirstname(edtFirstname.getText().toString());
+                accountEntity.setLastname(editLastname.getText().toString());
+                accountEntity.setEmail(edtEmail.getText().toString());
+                accountEntity.setPhone(edtPhone.getText().toString());
+                accountEntity.setUsername(edtUsername2.getText().toString());
+                accountEntity.setPassword(edtPassword2.getText().toString());
 
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.putExtra("account", account);
+                intent.putExtra("account", accountEntity);
                 startActivity(intent);
             }
         });
