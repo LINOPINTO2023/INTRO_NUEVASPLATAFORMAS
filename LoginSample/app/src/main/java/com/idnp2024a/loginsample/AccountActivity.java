@@ -12,7 +12,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.gson.Gson;
+
 public class AccountActivity extends AppCompatActivity {
+    public final static String ACCOUNT_RECORD="ACCOUNT_RECORD";
+
+    public final static Integer ACCOUNT_ACCEPTAR=100;
+    public final static Integer ACCOUNT_CANCELAR=200;
 
     //Clase AccountActivity: Es una actividad que permite al usuario crear una nueva cuenta
     @Override
@@ -50,9 +56,21 @@ public class AccountActivity extends AppCompatActivity {
                 accountEntity.setUsername(edtUsername2.getText().toString());
                 accountEntity.setPassword(edtPassword2.getText().toString());
 
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.putExtra("account", accountEntity);
-                startActivity(intent);
+                Gson gson =new Gson();
+                String accountJson=gson.toJson(accountEntity);
+
+                Intent data = new Intent();
+                data.putExtra(ACCOUNT_RECORD,accountJson);
+
+                setResult(ACCOUNT_ACCEPTAR,data);
+                finish();
+            }
+        });
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(ACCOUNT_CANCELAR);
+                finish();
             }
         });
     }
