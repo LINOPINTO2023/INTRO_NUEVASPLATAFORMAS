@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.idnp2024a.loginsample.databinding.ActivityMainBinding;
@@ -20,14 +24,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/*        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });*/
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -37,32 +33,35 @@ public class LoginActivity extends AppCompatActivity {
         Button btnLogin = binding.btnLogin;
         Button btnAddAccount = binding.btnAddAccount;
 
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Dentro del OnClickListener del botón de login
                 if(edtUsername.getText().toString().equals("admin") && edtPassword.getText().toString().equals("admin")) {
-                    // Si la autenticación es exitosa, crear un Intent para ir a HomeActivity
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-
-                    // Agregar el valor del campo de usuario como extra en el Intent
                     intent.putExtra("username", edtUsername.getText().toString());
-
-                    // Iniciar HomeActivity
                     startActivity(intent);
-                    finish(); // Terminar LoginActivity para que el usuario no pueda volver atrás
+                    finish();
                 } else {
-                    // Si la autenticación falla, mostrar mensaje de error
                     Toast.makeText(getApplicationContext(), "Error en la Autenticacion", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG,"Error en la Autenticacion");
+                    Log.d(TAG, "Error en la Autenticacion");
                 }
             }
         });
 
-        btnAddAccount.setOnClickListener(V->{
-            Intent intent = new Intent(getApplicationContext(),AccountActivity.class);
-            startActivity(intent);
+        btnAddAccount.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+            activityResultLauncher.launch(intent);
         });
     }
+
+    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult activityResult) {
+                    Integer resulcode=activityResult.getResultCode();
+                    Intent data = activityResult.getData();
+                }
+            }
+    );
 }

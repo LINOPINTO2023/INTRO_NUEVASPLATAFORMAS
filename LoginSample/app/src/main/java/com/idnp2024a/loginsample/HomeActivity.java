@@ -12,10 +12,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Obtener el valor del campo de usuario del Intent
         String username = getIntent().getStringExtra("username");
-
-        // Mostrar el valor en el TextView de bienvenida
         TextView txtWelcome = findViewById(R.id.txtWelcome);
         txtWelcome.setText("Bienvenido " + username);
     }

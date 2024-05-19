@@ -10,6 +10,7 @@ public class AccountEntity implements Serializable {
     private String username;
     private String password;
 
+    // Getters and Setters
     public String getFirstname() {
         return firstname;
     }
