@@ -28,6 +28,9 @@ public class AccountActivity extends AppCompatActivity {
             return insets;
         });
 
+        Button btnAceptar = findViewById(R.id.btnAceptar);
+        Button btnCancelar= findViewById(R.id.btnCancelar);
+
         EditText edtFirstname = findViewById(R.id.edtFirstname);
         EditText editLastname = findViewById(R.id.editLastname);
         EditText edtEmail = findViewById(R.id.edtEmail);
@@ -35,8 +38,8 @@ public class AccountActivity extends AppCompatActivity {
         EditText edtUsername2 = findViewById(R.id.edtUsername2);
         EditText edtPassword2 = findViewById(R.id.edtPassword2);
 
-        Button btnOk = findViewById(R.id.btnOk);
-        btnOk.setOnClickListener(new View.OnClickListener() {
+
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AccountEntity account = new AccountEntity();

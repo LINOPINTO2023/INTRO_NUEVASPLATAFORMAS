@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult activityResult) {
-                    Integer resulcode=activityResult.getResultCode();
+                    Integer resultCodecode=activityResult.getResultCode();
                     Intent data = activityResult.getData();
                 }
             }
