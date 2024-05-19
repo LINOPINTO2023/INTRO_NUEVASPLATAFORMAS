@@ -21,6 +21,7 @@ import com.idnp2024a.loginsample.databinding.ActivityMainBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static String TAG="MainActivity";
     private ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +39,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(edtUsername.getText().toString().equals("admin") && edtPassword.getText().toString().equals("admin")) {
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    intent.putExtra("username", edtUsername.getText().toString());
-                    startActivity(intent);
-                    finish();
+                    Toast.makeText(getApplicationContext(), "Bienvenido a mi App", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Bienvenido a mi App");
+                    //Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    //intent.putExtra("username", edtUsername.getText().toString());
+                    //startActivity(intent);
+                    //finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Error en la Autenticacion", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Error en la Autenticacion");
@@ -52,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         btnAddAccount.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
             activityResultLauncher.launch(intent);
+
         });
     }
 
@@ -60,21 +64,23 @@ public class LoginActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult activityResult) {
-                    Integer resultCodecode=activityResult.getResultCode();
-                    if(resultCodecode==AccountActivity.ACCOUNT_ACCEPTAR){
+                    Integer resultCode=activityResult.getResultCode();
+                    if(resultCode==AccountActivity.ACCOUNT_ACCEPTAR){
                         Intent data = activityResult.getData();
                         //para recuperar datos
                         String account_record= data.getStringExtra(AccountActivity.ACCOUNT_RECORD);
+
                         Gson gson = new Gson();
                         AccountEntity accountEntity= gson.fromJson(account_record,AccountEntity.class);
                         String firtsname = accountEntity.getFirstname();
                         Toast.makeText(getApplicationContext(),"Nombre:"+firtsname,Toast.LENGTH_SHORT).show();
-
+                        Log.d("LoginActivity","Nombre:"+firtsname);
                     }
-                    else if(resultCodecode == AccountActivity.ACCOUNT_CANCELAR){
-                        Toast.makeText(getApplicationContext(),"Cancelado",Toast.LENGTH_SHORT).show();
+                    else if(resultCode == AccountActivity.ACCOUNT_CANCELAR){
+                        Toast.makeText(getApplicationContext(),"Cancelado",Toast.LENGTH_LONG).show();
+                        Log.d("LoginActivity","Cancelado");
                     }
-                    Intent data = activityResult.getData();
+                    //Intent data = activityResult.getData();
                 }
             }
     );
