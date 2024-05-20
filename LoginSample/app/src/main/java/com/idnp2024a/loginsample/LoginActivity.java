@@ -23,6 +23,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private static String TAG="MainActivity";
     private ActivityMainBinding binding;
+    private AccountEntity accountEntity;
+    private String accountEntityString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +43,10 @@ public class LoginActivity extends AppCompatActivity {
                 if(edtUsername.getText().toString().equals("admin") && edtPassword.getText().toString().equals("admin")) {
                     Toast.makeText(getApplicationContext(), "Bienvenido a mi App", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Bienvenido a mi App");
-                    //Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    //intent.putExtra("username", edtUsername.getText().toString());
-                    //startActivity(intent);
-                    //finish();
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    intent.putExtra("ACCOUNT",accountEntityString);
+                    startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "Error en la Autenticacion", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Error en la Autenticacion");
@@ -65,13 +67,14 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult activityResult) {
                     Integer resultCode=activityResult.getResultCode();
+                    Log.d("LoginActivity","resultCode:"+resultCode);
                     if(resultCode==AccountActivity.ACCOUNT_ACCEPTAR){
                         Intent data = activityResult.getData();
                         //para recuperar datos
-                        String account_record= data.getStringExtra(AccountActivity.ACCOUNT_RECORD);
+                        accountEntityString= data.getStringExtra(AccountActivity.ACCOUNT_RECORD);
 
                         Gson gson = new Gson();
-                        AccountEntity accountEntity= gson.fromJson(account_record,AccountEntity.class);
+                        accountEntity= gson.fromJson(accountEntityString,AccountEntity.class);
                         String firtsname = accountEntity.getFirstname();
                         Toast.makeText(getApplicationContext(),"Nombre:"+firtsname,Toast.LENGTH_SHORT).show();
                         Log.d("LoginActivity","Nombre:"+firtsname);
