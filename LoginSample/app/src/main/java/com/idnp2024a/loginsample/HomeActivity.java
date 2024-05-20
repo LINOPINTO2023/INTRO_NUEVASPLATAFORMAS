@@ -26,24 +26,16 @@ public class HomeActivity extends AppCompatActivity {
             return WindowInsetsCompat.CONSUMED;
         });
 
-        String accountEntityString = getIntent().getStringExtra("ACCOUNT");
-        Log.d("HomeActivity", accountEntityString);
+        String accountEntityJson = getIntent().getStringExtra("ACCOUNT");
+        Log.d("HomeActivity", accountEntityJson);
 
-        if (accountEntityString != null) {
-            Gson gson = new Gson();
-            AccountEntity accountEntity = gson.fromJson(accountEntityString, AccountEntity.class);
+        Gson gson = new Gson();
+        AccountEntity accountEntity = gson.fromJson(accountEntityJson, AccountEntity.class);
 
-            TextView txtWelcome = findViewById(R.id.txtWelcome);
-            txtWelcome.setText("Bienvenido " + accountEntity.getFirstname() + " " + accountEntity.getLastname());
-
-            TextView txtEmail = findViewById(R.id.txtEmail);
-            txtEmail.setText("Email: " + accountEntity.getEmail());
-
-            TextView txtPhone = findViewById(R.id.txtPhone);
-            txtPhone.setText("Telefono: " + accountEntity.getPhone());
-
-            TextView txtUsername = findViewById(R.id.txtUsername);
-            txtUsername.setText("Usuario: " + accountEntity.getUsername());
-        }
+        TextView txtWelcome = findViewById(R.id.txtWelcome);
+        txtWelcome.setText("Bienvenido " + accountEntity.getFirstname() + " " + accountEntity.getLastname() + "\n" +
+                "Correo: " + accountEntity.getEmail() + "\n" +
+                "Teléfono: " + accountEntity.getPhone() + "\n" +
+                "Usuario: " + accountEntity.getUsername());
     }
 }

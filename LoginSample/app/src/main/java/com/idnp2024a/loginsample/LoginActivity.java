@@ -1,6 +1,8 @@
 package com.idnp2024a.loginsample;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +21,7 @@ import com.idnp2024a.loginsample.databinding.ActivityMainBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "LoginActivity";
+    private static String TAG="LoginActivity";
     private ActivityMainBinding binding;
     private AccountEntity accountEntity;
     private String accountEntityString;
@@ -39,13 +41,17 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (accountEntity != null) {
-                    if (edtUsername.getText().toString().equals(accountEntity.getUsername()) &&
-                            edtPassword.getText().toString().equals(accountEntity.getPassword())) {
+                SharedPreferences prefs = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+                String savedUserJson = prefs.getString("account", null);
+                if (savedUserJson != null) {
+                    Gson gson = new Gson();
+                    AccountEntity savedAccount = gson.fromJson(savedUserJson, AccountEntity.class);
+                    if (edtUsername.getText().toString().equals(savedAccount.getUsername()) &&
+                            edtPassword.getText().toString().equals(savedAccount.getPassword())) {
                         Toast.makeText(getApplicationContext(), "Bienvenido a mi App", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "Bienvenido a mi App");
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        intent.putExtra("ACCOUNT", accountEntityString);
+                        intent.putExtra("ACCOUNT", savedUserJson);
                         startActivity(intent);
                         finish();
                     } else {
@@ -53,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "Error en la Autenticacion");
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "No hay ninguna cuenta registrada", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "No hay ninguna cuenta registrada");
+                    Toast.makeText(getApplicationContext(), "Error en la Autenticacion", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Error en la Autenticacion");
                 }
             }
         });
@@ -70,20 +76,26 @@ public class LoginActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult activityResult) {
-                    int resultCode = activityResult.getResultCode();
-                    Log.d(TAG, "resultCode:" + resultCode);
-                    if (resultCode == AccountActivity.ACCOUNT_ACCEPTAR) {
+                    Integer resultCode = activityResult.getResultCode();
+                    Log.d("LoginActivity","resultCode:"+resultCode);
+                    if(resultCode == AccountActivity.ACCOUNT_ACCEPTAR){
                         Intent data = activityResult.getData();
                         accountEntityString = data.getStringExtra(AccountActivity.ACCOUNT_RECORD);
 
                         Gson gson = new Gson();
                         accountEntity = gson.fromJson(accountEntityString, AccountEntity.class);
                         String firstname = accountEntity.getFirstname();
-                        Toast.makeText(getApplicationContext(), "Nombre:" + firstname, Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "Nombre:" + firstname);
-                    } else if (resultCode == AccountActivity.ACCOUNT_CANCELAR) {
-                        Toast.makeText(getApplicationContext(), "Cancelado", Toast.LENGTH_LONG).show();
-                        Log.d(TAG, "Cancelado");
+
+                        SharedPreferences prefs = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("account", accountEntityString);
+                        editor.apply();
+
+                        Toast.makeText(getApplicationContext(),"Nombre:"+firstname,Toast.LENGTH_SHORT).show();
+                        Log.d("LoginActivity","Nombre:"+firstname);
+                    } else if(resultCode == AccountActivity.ACCOUNT_CANCELAR){
+                        Toast.makeText(getApplicationContext(),"Cancelado",Toast.LENGTH_LONG).show();
+                        Log.d("LoginActivity","Cancelado");
                     }
                 }
             }
