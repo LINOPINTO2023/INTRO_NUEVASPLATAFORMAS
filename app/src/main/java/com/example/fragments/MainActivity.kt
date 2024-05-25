@@ -22,19 +22,19 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        txtMensaje = findViewById<TextView>(R.id.txtMessage)
+        //txtMensaje = findViewById<TextView>(R.id.txtMessage)
 
         // Se instancia el fragment con parametro a la funcion lambda del Activity
-        val blankFragment = FragmentMessage.newInstance(response)
+        //val blankFragment = FragmentMessage.newInstance(response)
 
         supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.frameLayout, blankFragment)
+            //setReorderingAllowed(true)
+            //replace(R.id.frameLayout, blankFragment)
         }
     }
 
     // Crea una funcion lambda que sera parametro del fragment
     val response: (String) -> Unit = { mensaje ->
-        txtMensaje.text = mensaje;
+        //txtMensaje.text = mensaje;
     }
 }
