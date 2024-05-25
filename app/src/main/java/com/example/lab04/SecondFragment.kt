@@ -11,7 +11,7 @@ import android.widget.EditText
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class BlankFragment : Fragment() {
+class SecondFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
@@ -27,7 +27,7 @@ class BlankFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_blank, container, false)
+        val view = inflater.inflate(R.layout.fragment_second, container, false)
 
         val btnEnviarMensaje = view.findViewById<Button>(R.id.btnEnviarMensaje)
         val editMensaje = view.findViewById<EditText>(R.id.edtMensaje)
@@ -43,10 +43,10 @@ class BlankFragment : Fragment() {
         private lateinit var clickBtnEnviarMensaje: (String) -> Unit
 
         @JvmStatic
-        fun newInstance(clickBtnEnviarMensaje: (String) -> Unit): BlankFragment {
-            val blankFragment = BlankFragment()
+        fun newInstance(clickBtnEnviarMensaje: (String) -> Unit): SecondFragment {
+            val secondFragment = SecondFragment()
             this.clickBtnEnviarMensaje = clickBtnEnviarMensaje
-            return blankFragment
+            return secondFragment
         }
     }
 }

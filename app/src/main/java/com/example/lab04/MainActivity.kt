@@ -1,54 +1,52 @@
 package com.example.lab04
-import com.example.lab04.R
+
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var txtMensaje: TextView;
+
+    private lateinit var txtMensaje: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        // Handle window insets for edge-to-edge
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        txtMensaje = findViewById<TextView>(R.id.txtMensaje)
-        val blankFragment = BlankFragment.newInstance(response)
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.frameLayout,blankFragment)
+
+        txtMensaje = findViewById(R.id.txtMensaje)
+
+        findViewById<Button>(R.id.buttonFragment1).setOnClickListener {
+            val fragment1 = BlankFragment.newInstance(responseFragment1)
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                replace(R.id.frameLayout, fragment1)
+            }
+        }
+
+        findViewById<Button>(R.id.buttonFragment2).setOnClickListener {
+            val fragment2 = SecondFragment.newInstance(responseFragment2)
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                replace(R.id.frameLayout, fragment2)
+            }
         }
     }
 
-    val response:(String)->Unit={mensaje ->
-        txtMensaje.text=(mensaje)
+    private val responseFragment1: (String) -> Unit = { mensaje ->
+        txtMensaje.text = "${txtMensaje.text}\nFragment 1 dice: $mensaje"
     }
 
+    private val responseFragment2: (String) -> Unit = { mensaje ->
+        txtMensaje.text = "${txtMensaje.text}\nFragment 2 dice: $mensaje"
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
