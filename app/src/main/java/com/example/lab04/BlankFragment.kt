@@ -43,7 +43,7 @@ class BlankFragment : Fragment() {
         private lateinit var clickBtnEnviarMensaje: (String) -> Unit
 
         @JvmStatic
-        fun newInstance(clickBtnEnviarMensaje: (String) -> Unit): BlankFragment {
+        fun newInstance(clickBtnEnviarMensaje1: String, clickBtnEnviarMensaje: (String) -> Unit): BlankFragment {
             val blankFragment = BlankFragment()
             this.clickBtnEnviarMensaje = clickBtnEnviarMensaje
             return blankFragment

@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 
 class MainActivity : AppCompatActivity() {
@@ -26,27 +27,30 @@ class MainActivity : AppCompatActivity() {
         txtMensaje = findViewById(R.id.txtMensaje)
 
         findViewById<Button>(R.id.buttonFragment1).setOnClickListener {
-            val fragment1 = BlankFragment.newInstance(responseFragment1)
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace(R.id.frameLayout, fragment1)
-            }
+            loadFragment(BlankFragment.newInstance("Fragment 1", responseFragment1))
         }
 
         findViewById<Button>(R.id.buttonFragment2).setOnClickListener {
-            val fragment2 = SecondFragment.newInstance(responseFragment2)
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                replace(R.id.frameLayout, fragment2)
-            }
+            loadFragment(SecondFragment.newInstance("Fragment 2", responseFragment2))
+        }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(R.id.frameLayout, fragment)
         }
     }
 
     private val responseFragment1: (String) -> Unit = { mensaje ->
-        txtMensaje.text = "${txtMensaje.text}\nFragment 1 dice: $mensaje"
+        updateMessage("Fragment 1 dice: $mensaje")
     }
 
     private val responseFragment2: (String) -> Unit = { mensaje ->
-        txtMensaje.text = "${txtMensaje.text}\nFragment 2 dice: $mensaje"
+        updateMessage("Fragment 2 dice: $mensaje")
+    }
+
+    private fun updateMessage(newMessage: String) {
+        txtMensaje.append("\n$newMessage")
     }
 }
