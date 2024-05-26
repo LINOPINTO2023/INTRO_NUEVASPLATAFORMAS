@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.commit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var txtMensaje:TextView;
@@ -20,13 +21,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         txtMensaje = findViewById<TextView>(R.id.txtMensaje)
-        supportFragmentManager.commit
+
+        val blankFragment = BlankFragment.newInstance(response)
+
+        supportFragmentManager.commit{
+            setReorderingAllowed(true)
+            replace(R.id.frameLayout,blankFragment)
+        }
     }
 
     val response:(String)->Unit={mensaje ->
 
         txtMensaje.text=mensaje
     }
-
-
 }
