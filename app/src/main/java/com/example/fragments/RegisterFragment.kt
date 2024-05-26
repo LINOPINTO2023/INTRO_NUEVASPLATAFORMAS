@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +23,12 @@ class RegisterFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var onDataPass: ((UserDates) -> Unit)? = null
+
+    fun setOnDataPassListener(listener: (UserDates) -> Unit) {
+        onDataPass = listener
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,7 +42,22 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        val view = inflater.inflate(R.layout.fragment_register, container, false)
+
+        view.findViewById<Button>(R.id.btnRegister).setOnClickListener {
+            val firstName = view.findViewById<EditText>(R.id.edtFirstName).text.toString()
+            val lastName = view.findViewById<EditText>(R.id.edtLastName).text.toString()
+            val email = view.findViewById<EditText>(R.id.edtEmail).text.toString()
+            val phone = view.findViewById<EditText>(R.id.edtPhone).text.toString().toInt()
+            val username = view.findViewById<EditText>(R.id.edtUserName).text.toString()
+            val password = view.findViewById<EditText>(R.id.edtPassword).text.toString()
+
+            val formData = UserDates(firstName, lastName, email, phone, username, password)
+
+            onDataPass?.invoke(formData)
+        }
+
+        return view
     }
 
     companion object {
