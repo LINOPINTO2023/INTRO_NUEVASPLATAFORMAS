@@ -32,34 +32,36 @@ class BlankFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_blank, container, false)
-        val view = inflater.inflate(R.layout.fragment_blank,container,false)
+        val view = inflater.inflate(R.layout.fragment_blank, container, false)
         val btnEnviarMensaje = view.findViewById<Button>(R.id.btnEnviarMensaje)
         val edtMensaje = view.findViewById<EditText>(R.id.edtMensaje)
+        btnEnviarMensaje.setOnClickListener {
+            val mensaje = edtMensaje.text.toString()
+            clickBtnEnviarMensaje(mensaje)
+
+        }
         return view
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BlankFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        private lateinit var clickBtnEnviarMensaje: (String) -> Unit
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BlankFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(clickBtnEnviarMensaje: (String) -> Unit): BlankFragment {
+            val blankFragment = BlankFragment()
+            this.clickBtnEnviarMensaje = clickBtnEnviarMensaje
+            return blankFragment
+        }
+//        fun newInstance(param1: String, param2: String) =
+//            BlankFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString(ARG_PARAM1, param1)
+//                    putString(ARG_PARAM2, param2)
+//                }
+//            }
     }
 }

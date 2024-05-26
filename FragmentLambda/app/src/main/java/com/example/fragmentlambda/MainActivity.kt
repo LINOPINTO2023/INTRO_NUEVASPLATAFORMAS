@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         txtMensaje = findViewById<TextView>(R.id.txtMensaje)
+        supportFragmentManager.commit
     }
 
     val response:(String)->Unit={mensaje ->
