@@ -1,56 +1,35 @@
 package com.example.fragmentlambdajava;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-public class RegisterFragment extends Fragment {
+public class MainActivity extends AppCompatActivity {
 
-    private OnRegisterListener onRegisterListener;
+    private TextView txtMensaje;
 
-    public interface OnRegisterListener {
-        void onRegister(User user);
-    }
-
-    public void setOnRegisterListener(OnRegisterListener onRegisterListener) {
-        this.onRegisterListener = onRegisterListener;
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        EditText edtFirstname = view.findViewById(R.id.edtFirstname);
-        EditText edtLastname = view.findViewById(R.id.edtLastname);
-        EditText edtEmail = view.findViewById(R.id.edtEmail);
-        EditText edtPhone = view.findViewById(R.id.edtPhone);
-        EditText edtUsername = view.findViewById(R.id.edtUsername);
-        EditText edtPassword = view.findViewById(R.id.edtPassword);
-        Button btnRegister = view.findViewById(R.id.btnRegister);
+        txtMensaje = findViewById(R.id.txtMensaje);
 
-        btnRegister.setOnClickListener(v -> {
-            User user = new User(
-                    edtFirstname.getText().toString(),
-                    edtLastname.getText().toString(),
-                    edtEmail.getText().toString(),
-                    edtPhone.getText().toString(),
-                    edtUsername.getText().toString(),
-                    edtPassword.getText().toString()
-            );
-
-            if (onRegisterListener != null) {
-                onRegisterListener.onRegister(user);
-            }
+        RegisterFragment registerFragment = new RegisterFragment();
+        registerFragment.setOnRegisterListener(user -> {
+            String userInfo = "Nombre: " + user.getFirstname() + " " + user.getLastname() +
+                    "\nCorreo: " + user.getEmail() +
+                    "\nTeléfono: " + user.getPhone() +
+                    "\nUsuario: " + user.getUsername();
+            txtMensaje.setText(userInfo);
         });
 
-        return view;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, registerFragment);
+        fragmentTransaction.commit();
     }
 }

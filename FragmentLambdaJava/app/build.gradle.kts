@@ -32,11 +32,12 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation("androidx.fragment:fragment:1.4.0")  // Asegúrate de tener esta línea para fragments
+    implementation("androidx.core:core-ktx:1.8.0")  // Biblioteca core-ktx para Kotlin
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
