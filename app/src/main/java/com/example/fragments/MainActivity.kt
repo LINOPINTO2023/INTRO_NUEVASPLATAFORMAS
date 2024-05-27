@@ -18,20 +18,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            insets
+//        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       // supportFragmentManager.beginTransaction().add(R.id.frameLayout, )
+        // Inicializa y muestra el fragmento de inicio (HomeFragment)
+        val homeFragment = HomeFragment()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.frameLayout, homeFragment)
+            .commit()
+
 
         binding.bottomNavigation.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.mRegister -> supportFragmentManager.beginTransaction().replace(R.id.frameLayout, RegisterFragment()).commit()
+                R.id.mRegister -> {
+                    val fragment = createRegisterFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit()
+                }
+                R.id.mHome -> {
+                    val fragment = HomeFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragment).commit()
+                }
             }
             true
         }
@@ -40,14 +52,31 @@ class MainActivity : AppCompatActivity() {
         // Se instancia el fragment con parametro a la funcion lambda del Activity
         //val blankFragment = FragmentMessage.newInstance(response)
 
-        supportFragmentManager.commit {
-            //setReorderingAllowed(true)
-            //replace(R.id.frameLayout, blankFragment)
-        }
+//        supportFragmentManager.commit {
+//            setReorderingAllowed(true)
+//            replace(R.id.frameLayout, blankFragment)
+//        }
     }
 
-    // Crea una funcion lambda que sera parametro del fragment
-    val response: (String) -> Unit = { mensaje ->
-        //txtMensaje.text = mensaje;
+    // Función para crear y configurar el RegisterFragment
+    private fun createRegisterFragment(): RegisterFragment {
+        val fragment = RegisterFragment()
+        fragment.setOnDataPassListener { formData ->
+            val homeFragment = HomeFragment()
+            val bundle = Bundle().apply {
+                putParcelable("formData", formData)
+            }
+            homeFragment.arguments = bundle
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, homeFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+        return fragment
     }
+    // Crea una funcion lambda que sera parametro del fragment
+//    val response: (String) -> Unit = { mensaje ->
+//        //txtMensaje.text = mensaje;
+//    }
 }

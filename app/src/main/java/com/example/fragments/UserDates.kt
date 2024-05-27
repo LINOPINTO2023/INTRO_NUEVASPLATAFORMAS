@@ -7,7 +7,7 @@ data class UserDates(
     val firstName: String,
     val lastName: String,
     val email: String,
-    val phone: Int,
+    val phone: Long,
     val userName: String,
     val password: String
 ) : Parcelable {
@@ -15,7 +15,7 @@ data class UserDates(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readInt(),
+        parcel.readLong(),
         parcel.readString() ?: "",
         parcel.readString() ?: ""
     ) {
@@ -28,7 +28,7 @@ data class UserDates(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(firstName)
         parcel.writeString(lastName)
-        parcel.writeInt(phone)
+        parcel.writeLong(phone)
         parcel.writeString(firstName)
         parcel.writeString(userName)
         parcel.writeString(password)

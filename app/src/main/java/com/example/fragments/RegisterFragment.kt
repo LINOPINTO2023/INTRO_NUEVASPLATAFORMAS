@@ -44,11 +44,13 @@ class RegisterFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_register, container, false)
 
+        //val editPhone = view.findViewById<EditText>(R.id.edtPhone)
+
         view.findViewById<Button>(R.id.btnRegister).setOnClickListener {
             val firstName = view.findViewById<EditText>(R.id.edtFirstName).text.toString()
             val lastName = view.findViewById<EditText>(R.id.edtLastName).text.toString()
             val email = view.findViewById<EditText>(R.id.edtEmail).text.toString()
-            val phone = view.findViewById<EditText>(R.id.edtPhone).text.toString().toInt()
+            val phone = view.findViewById<EditText>(R.id.edtPhone).text.toString().toLong()
             val username = view.findViewById<EditText>(R.id.edtUserName).text.toString()
             val password = view.findViewById<EditText>(R.id.edtPassword).text.toString()
 
