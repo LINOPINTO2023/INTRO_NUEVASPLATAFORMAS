@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
 
-// Definir los puntos basados en las dimensiones de la pantalla
+
         points.add(new PointRoom(10, 10));
         points.add(new PointRoom(1070, 10));
         points.add(new PointRoom(1070, 1800));
