@@ -24,7 +24,15 @@ public class RoomView extends View {
             R.drawable.d,
             R.drawable.e,
             R.drawable.f,
-            R.drawable.g
+            R.drawable.g,
+            R.drawable.h,
+            R.drawable.i,
+            R.drawable.j,
+            R.drawable.k,
+            R.drawable.l,
+            R.drawable.m,
+            R.drawable.n,
+            R.drawable.o
     };
 
     public RoomView(Context context, @Nullable AttributeSet attrs) {
